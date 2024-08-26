@@ -14,8 +14,7 @@ def main():
     logging.basicConfig(level=args.log)
 
     # TODO: fix the followings
-    lst = args.num
-    logging.info("Result: {}".format(sum(lst)))
+    logging.info("Result: {}".format())
 
 if __name__ == "__main__":
     main()

@@ -17,10 +17,6 @@ def main():
     solutions = []
 
     # TODO: find the solutions of the equation x^2 - 100x + 1600 = 0
-    for n in r:
-        result = n*n - 100*n + 1600
-        if result == 0:
-            solutions.append(n)
 
     logging.info("Solutions: {}".format(solutions))
 
