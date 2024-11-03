@@ -16,18 +16,18 @@ class Infix(object):
 
 @Infix
 def implies(p, q):
-    raise NotImplementedError
+    return not p or q
 
 @Infix
 def iff(p, q):
-    raise NotImplementedError
+    return (p |implies| q) and (q |implies| p)
 
 @Infix
 def xor(p, q):
-    raise NotImplementedError
+    return (not p and q) or (not q and p)
 
 @Infix
 def eq(p, q):
-    raise NotImplementedError
+    return not (p |xor| q)
 
 

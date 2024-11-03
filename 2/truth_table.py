@@ -9,11 +9,54 @@ def extract_variables(expression):
     sorted_variable_set = sorted(set(re.findall(r'\b[a-z]\b', expression)))
     return sorted_variable_set
 
+def make_combinations(nvar):
+    if nvar == 0:
+        combinations = [[]]
+    else:
+        tmp = make_combinations(nvar - 1)
+        combinations = []
+        for c in tmp:
+            c1 = copy.copy(c)
+            c2 = copy.copy(c)
+            c1.append(True)
+            c2.append(False)
+            combinations.append(c1)
+            combinations.append(c2)
+    logging.debug("nvar: {}, combinations: {}".format(nvar, combinations))
+    return combinations
+
 def truth_table(expression):
-    raise NotImplementedError
+    vlst = extract_variables(expression)
+    nvar = len(vlst)
+    combinations = make_combinations(nvar)
+
+    for c in combinations:
+        logging.debug("c (before): {}".format(c))
+        for idx in range(nvar):
+            e = "{}={}".format(vlst[idx], c[idx])
+            logging.debug(e)
+            exec(e)
+        ret = eval(expression)
+        c.append(ret)
+        logging.debug("c (after): {}".format(c))
+
+    return combinations
 
 def print_truth_table(expression):
-    raise NotImplementedError
+    vlst = extract_variables(expression)
+    table = truth_table(expression)
+
+    logging.debug("vlst: {}".format(vlst))
+    logging.debug("table: {}".format(table))
+
+    for v in vlst:
+        print ("{}\t".format(v), end="")
+    print(expression)
+
+    for row in table:
+        for e in row:
+            print ("{}\t".format(e), end="")
+        print("")
 
 def command_line_args():
     parser = argparse.ArgumentParser()
